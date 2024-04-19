@@ -1,0 +1,9 @@
+/home/anton/Desktop/workspace/cpp/test-space/build/CMakeFiles/test-space.dir
+/home/anton/Desktop/workspace/cpp/test-space/build/CMakeFiles/package.dir
+/home/anton/Desktop/workspace/cpp/test-space/build/CMakeFiles/package_source.dir
+/home/anton/Desktop/workspace/cpp/test-space/build/CMakeFiles/edit_cache.dir
+/home/anton/Desktop/workspace/cpp/test-space/build/CMakeFiles/rebuild_cache.dir
+/home/anton/Desktop/workspace/cpp/test-space/build/CMakeFiles/list_install_components.dir
+/home/anton/Desktop/workspace/cpp/test-space/build/CMakeFiles/install.dir
+/home/anton/Desktop/workspace/cpp/test-space/build/CMakeFiles/install/local.dir
+/home/anton/Desktop/workspace/cpp/test-space/build/CMakeFiles/install/strip.dir
