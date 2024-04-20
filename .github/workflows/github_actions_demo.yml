@@ -38,20 +38,46 @@ jobs:
           asset_name: test-space-0.0.${{ github.run_number }}-Linux.deb
           asset_content_type: application/vnd.debian.binary-package
 
-  windows-latest:
+  windows:
     runs-on: windows-latest
     steps:
-      - name: Build Boost
-        id: boost
-        uses: egor-tensin/build-boost@v1
+      - uses: actions/checkout@v3
+      - name: Install build tools
+        uses: ms-azure/actions-toolchain@v1
         with:
-          version: 1.71.0
-          libraries: filesystem program_options system
-          platform: x64
-          configuration: Release
-
-      - name: Show paths
-        run: |
-          printf 'Boost has been unpacked to: %s\n' '${{ steps.boost.outputs.root }}'
-          printf 'Libraries can be found here: %s\n' '${{ steps.boost.outputs.librarydir }}'
-        shell: bash
+          toolchain: msvc-v143  # Adjust for your desired Visual Studio version
+      - name: Install Boost (optional)
+        uses: egor-tensin/build-boost@v1  # Adjust version if needed
+        with:
+          version: '1.79.0'  # Specify your desired Boost version
+          libraries: 'filesystem system'  # List required libraries (comma-separated)
+          platform: x64  # Choose x86 for 32-bit (optional)
+      - name: Configure CMake
+        working-directory: build
+        env:
+          BOOST_ROOT: C:\local\boost  # Set if using prebuilt Boost (adjust path)
+        run: cmake .. -A Win32  # Or x64 for 64-bit
+      - name: Build
+        working-directory: build
+        run: msbuild.exe /property:Configuration=Release hello.sln
+      - name: Run tests
+        working-directory: build\Release
+        run: ctest.exe --output-on-failure
+      - name: Upload test results (optional)
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: build\Testing\TestReport.xml  # Adjust path if needed
+      - name: Create release (optional)
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.sha }}
+          release_name: Hello World v${{ github.sha }}
+          body: |
+            Built and tested hello world application on Windows.
+            
+            Commit SHA: ${{ github.sha }}
+            
+            # Add additional details here
+          draft: false
+          prerelease: false
