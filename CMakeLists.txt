@@ -3,7 +3,9 @@ cmake_minimum_required(VERSION 3.22.1)
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(PROJECT_VERSION 0.0.${PATCH_VERSION})
 
-project(test-space VERSION ${PROJECT_VERSION})
+project(MyProject VERSION ${PROJECT_VERSION}
+        DESCRIPTION "Builded using modern CMake"
+        LANGUAGES CXX)
 
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
@@ -15,7 +17,6 @@ add_library(lib_space lib.cpp)
 add_executable(test_version test_version.cpp)
 
 set_target_properties(test_version PROPERTIES
-        COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
         INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
 )
 target_include_directories(${CMAKE_PROJECT_NAME}
